@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xác Thực Tài Liệu Điện Tử | SecureVerify</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --primary-light: #e0e7ff;
+            --secondary-color: #3f37c9;
+            --accent-color: #4cc9f0;
+            --dark-color: #1a1a2e;
+            --light-color: #f8f9fa;
+            --success-color: #4caf50;
+            --warning-color: #ff9800;
+            --error-color: #f44336;
+            --border-radius: 12px;
+            --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f7ff;
+            color: var(--dark-color);
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            margin: 0;
+        }
+        
+        .main-container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        
+        .auth-card {
+            display: flex;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+            min-height: 600px;
+            transition: var(--transition);
+        }
+        
+        .auth-hero {
+            flex: 1;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .auth-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            transform: rotate(30deg);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero-logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        
+        .hero-logo-icon {
+            font-size: 28px;
+            margin-right: 12px;
+            color: var(--accent-color);
+        }
+        
+        .hero-logo-text {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        
+        .hero-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 40px;
+            max-width: 90%;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 40px;
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            transition: var(--transition);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .feature-icon {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+        }
+        
+        .feature-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+        
+        .feature-desc {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+        
+        .auth-content {
+            flex: 1;
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .content-header {
+            margin-bottom: 40px;
+        }
+        
+        .content-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--dark-color);
+        }
+        
+        .content-subtitle {
+            color: #64748b;
+            font-size: 1rem;
+        }
+        
+        .auth-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .auth-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 24px;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            font-size: 1rem;
+            transition: var(--transition);
+            text-decoration: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(67, 97, 238, 0.2);
+        }
+        
+        .btn-secondary {
+            background-color: var(--primary-light);
+            color: var(--primary-color);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #d1d9ff;
+            transform: translateY(-2px);
+        }
+        
+        .btn-icon {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .auth-footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+        
+        .security-badge {
+            display: inline-flex;
+            align-items: center;
+            background: #f1f5f9;
+            padding: 8px 16px;
+            border-radius: 20px;
+            margin-top: 20px;
+        }
+        
+        .security-badge i {
+            color: var(--success-color);
+            margin-right: 8px;
+        }
+        
+        /* Animation */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .auth-card {
+                flex-direction: column;
+                min-height: auto;
+            }
+            
+            .auth-hero, .auth-content {
+                padding: 40px;
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .content-title {
+                font-size: 1.8rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .auth-hero, .auth-content {
+                padding: 30px;
+            }
+            
+            .hero-title {
+                font-size: 1.8rem;
+            }
+            
+            .content-title {
+                font-size: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .auth-hero, .auth-content {
+                padding: 25px 20px;
+            }
+            
+            .hero-title {
+                font-size: 1.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .content-title {
+                font-size: 1.3rem;
+            }
+            
+            .auth-btn {
+                padding: 14px 20px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="auth-card animate__animated animate__fadeIn">
+            <div class="auth-hero">
+                <div class="hero-content">
+                    <div class="hero-logo">
+                        <div class="hero-logo-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="hero-logo-text">SecureVerify</div>
+                    </div>
+                    
+                    <h1 class="hero-title">Xác thực tài liệu điện tử an toàn</h1>
+                    <p class="hero-subtitle">Giải pháp bảo mật hàng đầu giúp bạn kiểm tra tính xác thực và toàn vẹn của các tài liệu quan trọng.</p>
+                    
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-fingerprint"></i>
+                            </div>
+                            <h3 class="feature-title">Xác thực chữ ký số</h3>
+                            <p class="feature-desc">Kiểm tra chữ ký điện tử với thuật toán mã hóa tiên tiến.</p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-file-contract"></i>
+                            </div>
+                            <h3 class="feature-title">Kiểm tra hợp đồng</h3>
+                            <p class="feature-desc">Xác minh tính hợp lệ của các tài liệu pháp lý quan trọng.</p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                            <h3 class="feature-title">Bảo mật tối đa</h3>
+                            <p class="feature-desc">Dữ liệu được mã hóa end-to-end đảm bảo an toàn tuyệt đối.</p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <h3 class="feature-title">Xử lý nhanh chóng</h3>
+                            <p class="feature-desc">Kết quả xác thực chỉ sau vài giây với công nghệ AI.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="auth-content">
+                <div class="content-header">
+                    <h2 class="content-title">Chào mừng bạn</h2>
+                    <p class="content-subtitle">Vui lòng chọn chức năng bạn muốn sử dụng</p>
+                </div>
+                
+                <div class="auth-actions">
+                    <a href="/verify" class="auth-btn btn-primary">
+                        <i class="fas fa-signature btn-icon"></i> Xác minh chữ ký điện tử
+                    </a>
+                    
+                    <a href="/document-check" class="auth-btn btn-secondary">
+                        <i class="fas fa-file-alt btn-icon"></i> Kiểm tra tài liệu
+                    </a>
+                    
+                    <a href="/batch-verify" class="auth-btn btn-secondary">
+                        <i class="fas fa-tasks btn-icon"></i> Xác thực hàng loạt
+                    </a>
+                </div>
+                
+                <div class="auth-footer">
+                    <div class="security-badge">
+                        <i class="fas fa-shield-check"></i>
+                        <span>Bảo mật đạt chuẩn ISO 27001 & PCI DSS</span>
+                    </div>
+                    <p class="mt-3">© 2023 SecureVerify. Tất cả quyền được bảo lưu.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Thêm hiệu ứng khi di chuột vào các nút
+        document.querySelectorAll('.auth-btn').forEach(button => {
+            button.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-3px)';
+                this.style.boxShadow = '0 7px 14px rgba(0, 0, 0, 0.1)';
+            });
+            
+            button.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+                this.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.05)';
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ Thống Ký Số Hiện Đại</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.83/dist/themes/light.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sl-color-primary-50: #f0f9ff;
+            --sl-color-primary-100: #e0f2fe;
+            --sl-color-primary-200: #bae6fd;
+            --sl-color-primary-300: #7dd3fc;
+            --sl-color-primary-400: #38bdf8;
+            --sl-color-primary-500: #0ea5e9;
+            --sl-color-primary-600: #0284c7;
+            --sl-color-primary-700: #0369a1;
+            --sl-color-primary-800: #075985;
+            --sl-color-primary-900: #0c4a6e;
+            --sl-color-primary-950: #082f49;
+        }
+        
+        body {
+            background-color: #f8fafc;
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            color: #1e293b;
+        }
+        
+        .glass-container {
+            width: 100%;
+            max-width: 1200px;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            background: white;
+            position: relative;
+            isolation: isolate;
+        }
+        
+        .glass-container::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0.4) 0%,
+                rgba(255, 255, 255, 0.1) 100%
+            );
+            z-index: -1;
+            border-radius: inherit;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .hero-section {
+            background: linear-gradient(160deg, var(--sl-color-primary-600) 0%, var(--sl-color-primary-800) 100%);
+            padding: 4rem 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(
+                circle at center,
+                rgba(255, 255, 255, 0.1) 0%,
+                transparent 70%
+            );
+            animation: rotate 20s linear infinite;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .logo i {
+            font-size: 2.5rem;
+            color: white;
+        }
+        
+        .hero-section h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        
+        .hero-section p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 350px;
+            margin: 0 auto 2rem;
+            line-height: 1.6;
+        }
+        
+        .action-section {
+            padding: 4rem 3rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .action-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .action-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-color: rgba(0, 0, 0, 0.1);
+        }
+        
+        .action-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--sl-color-primary-800);
+        }
+        
+        .action-card p {
+            color: #64748b;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+            width: 100%;
+        }
+        
+        .btn-primary {
+            background: var(--sl-color-primary-600);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: var(--sl-color-primary-700);
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: #f1f5f9;
+            color: var(--sl-color-primary-800);
+        }
+        
+        .btn-secondary:hover {
+            background: #e2e8f0;
+            transform: translateY(-2px);
+        }
+        
+        .btn i {
+            font-size: 1.2rem;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+        
+        .feature i {
+            color: var(--sl-color-primary-500);
+            font-size: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .glass-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-section {
+                padding: 3rem 1.5rem;
+            }
+            
+            .action-section {
+                padding: 3rem 1.5rem;
+            }
+            
+            .hero-section h1 {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .features {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+    <div class="glass-container animate__animated animate__fadeIn">
+        <div class="hero-section">
+            <div class="hero-content">
+                <div class="logo animate__animated animate__bounceIn">
+                    <i class="fas fa-fingerprint"></i>
+                </div>
+                <h1>Ký Số An Toàn</h1>
+                <p>Giải pháp bảo mật và xác thực tài liệu điện tử với công nghệ mã hóa tiên tiến</p>
+                <div class="features">
+                    <div class="feature">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Bảo mật tuyệt đối</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-bolt"></i>
+                        <span>Xử lý nhanh chóng</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-lock"></i>
+                        <span>Mã hóa RSA 2048-bit</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Xác thực dễ dàng</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="action-section">
+            <div class="action-card animate__animated animate__fadeInRight animate__delay-1s">
+                <h3>Tạo Cặp Khóa</h3>
+                <p>Tạo và tải về cặp khóa RSA công khai và bí mật để bắt đầu quá trình ký số tài liệu.</p>
+                <form action="/create_keys" method="post">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-key"></i> Tạo Khóa Ngay
+                    </button>
+                </form>
+            </div>
+            
+            <div class="action-card animate__animated animate__fadeInRight animate__delay-2s">
+                <h3>Ký Tài Liệu</h3>
+                <p>Sử dụng khóa bí mật của bạn để tạo chữ ký số cho tài liệu quan trọng.</p>
+                <a href="/sign" class="btn btn-secondary">
+                    <i class="fas fa-pen-fancy"></i> Ký Tài Liệu
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.83/dist/shoelace.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hiệu ứng khi di chuột vào các card
+            const actionCards = document.querySelectorAll('.action-card');
+            actionCards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.style.transform = 'translateY(-5px)';
+                    card.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.1)';
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = '';
+                    card.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.05)';
+                });
+            });
+    
+            // Xử lý form tạo khóa
+            const createKeyForm = document.querySelector('form[action="/create_keys"]');
+            if (createKeyForm) {
+                createKeyForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Hiển thị loading
+                    const submitBtn = this.querySelector('button[type="submit"]');
+                    const originalText = submitBtn.innerHTML;
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang tạo khóa...';
+                    submitBtn.disabled = true;
+                    
+                    // Gửi request
+                    fetch(this.action, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                    })
+                    .then(response => {
+                        if (!response.ok) throw new Error('Network response was not ok');
+                        return response.blob();
+                    })
+                    .then(blob => {
+                        // Tạo link tải về
+                        const url = window.URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = 'rsa_keys.zip';
+                        document.body.appendChild(a);
+                        a.click();
+                        window.URL.revokeObjectURL(url);
+                        
+                        // Hiển thị thông báo thành công
+                        showNotification('Tạo khóa thành công! File đã được tải về.', 'success');
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        showNotification('Có lỗi xảy ra khi tạo khóa. Vui lòng thử lại.', 'error');
+                    })
+                    .finally(() => {
+                        submitBtn.innerHTML = originalText;
+                        submitBtn.disabled = false;
+                    });
+                });
+            }
+    
+            // Hiển thị thông báo
+            function showNotification(message, type = 'success') {
+                const notification = document.createElement('div');
+                notification.className = `notification ${type}`;
+                notification.innerHTML = `
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+                    <span>${message}</span>
+                `;
+                
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.classList.add('show');
+                }, 10);
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                    setTimeout(() => {
+                        notification.remove();
+                    }, 300);
+                }, 3000);
+            }
+    
+            // Thêm style cho notification
+            const style = document.createElement('style');
+            style.textContent = `
+                .notification {
+                    position: fixed;
+                    bottom: 20px;
+                    right: 20px;
+                    background: white;
+                    padding: 16px 24px;
+                    border-radius: 12px;
+                    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                    transform: translateY(100px);
+                    opacity: 0;
+                    transition: all 0.3s ease;
+                    z-index: 1000;
+                    border-left: 4px solid var(--sl-color-primary-600);
+                }
+                
+                .notification.show {
+                    transform: translateY(0);
+                    opacity: 1;
+                }
+                
+                .notification.success {
+                    border-left-color: var(--sl-color-primary-600);
+                }
+                
+                .notification.error {
+                    border-left-color: #ef4444;
+                }
+                
+                .notification i {
+                    font-size: 1.2rem;
+                }
+                
+                .notification.success i {
+                    color: var(--sl-color-primary-600);
+                }
+                
+                .notification.error i {
+                    color: #ef4444;
+                }
+                
+                .notification span {
+                    font-weight: 500;
+                }
+            `;
+            document.head.appendChild(style);
+    
+            // Kiểm tra kết nối mạng
+            window.addEventListener('online', updateOnlineStatus);
+            window.addEventListener('offline', updateOnlineStatus);
+    
+            function updateOnlineStatus() {
+                if (!navigator.onLine) {
+                    showNotification('Mất kết nối mạng. Vui lòng kiểm tra lại internet.', 'error');
+                }
+            }
+    
+            // Thêm hiệu ứng khi cuộn trang (nếu có nhiều nội dung)
+            window.addEventListener('scroll', function() {
+                const scrollPosition = window.scrollY;
+                const heroSection = document.querySelector('.hero-section');
+                
+                if (heroSection) {
+                    heroSection.style.transform = `translateY(${scrollPosition * 0.2}px)`;
+                }
+            });
+    
+            // Hiệu ứng cho các nút khi hover
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(btn => {
+                btn.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-2px)';
+                });
+                
+                btn.addEventListener('mouseleave', function() {
+                    this.style.transform = '';
+                });
+            });
+    
+            // Kiểm tra service worker (nếu cần PWA)
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function() {
+                    navigator.serviceWorker.register('/sw.js').then(
+                        function(registration) {
+                            console.log('ServiceWorker registration successful');
+                        }, 
+                        function(err) {
+                            console.log('ServiceWorker registration failed: ', err);
+                        }
+                    );
+                });
+            }
+        });
+    </script>
+</body>
+</html>
