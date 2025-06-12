@@ -132,5 +132,6 @@ Không sử dụng khóa được tạo ra từ ứng dụng này cho mục đí
 Liên Hệ
 Nếu có bất kỳ câu hỏi hoặc đóng góp nào, vui lòng liên hệ qua email: huonggiang09082005@gmail.com
 <img width="1198" alt="Screenshot 2025-06-12 at 14 49 29" src="https://github.com/user-attachments/assets/fda149f7-157b-4a4f-b0fb-4d12d45fd380" />
+<img width="968" alt="Screenshot 2025-06-12 at 14 41 20" src="https://github.com/user-attachments/assets/285e354a-5a33-4e2b-8535-9430329d6c5f" />
 
 LƯU HƯƠNG GIANG CNTT17-07
